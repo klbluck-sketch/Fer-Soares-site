@@ -34,51 +34,58 @@ function normalizar(txt) {
     .toLowerCase();
 }
 
+const UNIDADE_ABREV = { caixa: "cx", unidade: "un" };
+
 function DoceCard({ nome, preco, hidden, qty, unidade, onAdd, onRemove }) {
+  const abrev = unidade ? UNIDADE_ABREV[unidade] || unidade : null;
   return (
     <div
-      className={`overflow-hidden rounded-md border bg-[#161311] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_36px_-22px_rgba(0,0,0,0.55)] ${
+      className={`overflow-hidden rounded-lg border bg-[#161311] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_26px_-16px_rgba(0,0,0,0.55)] ${
         qty > 0 ? "border-dourado/70" : "border-dourado/15 hover:border-dourado/60"
       } ${hidden ? "hidden" : ""}`}
     >
       {/* Espaço reservado para a foto do doce (a importar depois) */}
       <div className="aspect-square w-full bg-[#1c1815]" />
 
-      <div className="px-5 py-4">
-      <div className="font-medium text-creme">{nome}</div>
-      <div className="mt-1.5 text-sm tracking-wide text-dourado">{preco}</div>
+      <div className="px-2.5 py-2">
+        <div className="line-clamp-2 text-[0.78rem] font-medium leading-tight text-creme">
+          {nome}
+        </div>
 
-      <div className="mt-3.5">
-        {qty > 0 ? (
-          <div className="flex items-center gap-3">
-            <button
-              onClick={onRemove}
-              aria-label={`Diminuir ${nome}`}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-dourado/40 text-dourado transition-colors hover:bg-dourado hover:text-verde active:scale-95"
-            >
-              <Minus size={14} />
-            </button>
-            <span className="text-center text-sm text-creme">
-              {qty}
-              {unidade ? ` ${unidade}${qty > 1 ? "s" : ""}` : ""}
-            </span>
+        <div className="mt-1.5 flex items-center justify-between gap-1.5">
+          <span className="truncate text-[0.72rem] text-dourado">{preco}</span>
+
+          {qty > 0 ? (
+            <div className="flex shrink-0 items-center gap-1">
+              <button
+                onClick={onRemove}
+                aria-label={`Diminuir ${nome}`}
+                className="flex h-6 w-6 items-center justify-center rounded-full border border-dourado/40 text-dourado transition-colors hover:bg-dourado hover:text-verde active:scale-95"
+              >
+                <Minus size={11} />
+              </button>
+              <span className="min-w-[1.1rem] text-center text-[0.72rem] text-creme">
+                {qty}
+                {abrev ? ` ${abrev}` : ""}
+              </span>
+              <button
+                onClick={onAdd}
+                aria-label={`Aumentar ${nome}`}
+                className="flex h-6 w-6 items-center justify-center rounded-full border border-dourado/40 text-dourado transition-colors hover:bg-dourado hover:text-verde active:scale-95"
+              >
+                <Plus size={11} />
+              </button>
+            </div>
+          ) : (
             <button
               onClick={onAdd}
-              aria-label={`Aumentar ${nome}`}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-dourado/40 text-dourado transition-colors hover:bg-dourado hover:text-verde active:scale-95"
+              aria-label={`Adicionar ${nome}`}
+              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-dourado text-verde transition-transform active:scale-90"
             >
-              <Plus size={14} />
+              <Plus size={13} />
             </button>
-          </div>
-        ) : (
-          <button
-            onClick={onAdd}
-            className="flex items-center gap-1.5 py-1.5 text-xs uppercase tracking-[0.06em] text-dourado transition-opacity hover:opacity-75"
-          >
-            <Plus size={14} /> Adicionar
-          </button>
-        )}
-      </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -184,7 +191,7 @@ export default function Cardapio() {
             Vendidos em caixa fechada de 10 unidades — preço por caixa.
           </p>
         </Reveal>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {docesFinos.map(([nome, preco]) => (
             <DoceCard
               key={nome}
@@ -218,7 +225,7 @@ export default function Cardapio() {
             )}
           </div>
         </Reveal>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {docesEspeciais.map(([nome, preco]) => (
             <DoceCard
               key={nome}
@@ -265,7 +272,7 @@ export default function Cardapio() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {docesTradicionais.map(([nome, preco]) => (
             <DoceCard
               key={nome}
