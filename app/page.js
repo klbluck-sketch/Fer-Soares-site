@@ -47,42 +47,45 @@ function DoceCard({ nome, preco, hidden, qty, unidade, onAdd, onRemove }) {
       {/* Espaço reservado para a foto do doce (a importar depois) */}
       <div className="aspect-square w-full bg-[#1c1815]" />
 
-      <div className="px-2.5 py-2">
-        <div className="line-clamp-2 text-[0.78rem] font-medium leading-tight text-creme">
+      <div className="px-1.5 py-1.5 sm:px-2.5 sm:py-2">
+        <div className="line-clamp-2 text-[0.62rem] font-medium leading-tight text-creme sm:text-[0.78rem]">
           {nome}
         </div>
 
-        <div className="mt-1.5 flex items-center justify-between gap-1.5">
-          <span className="truncate text-[0.72rem] text-dourado">{preco}</span>
+        <div className="mt-1 flex items-center justify-between gap-1 sm:mt-1.5 sm:gap-1.5">
+          <span className="truncate text-[0.56rem] text-dourado sm:text-[0.72rem]">{preco}</span>
 
           {qty > 0 ? (
-            <div className="flex shrink-0 items-center gap-1">
+            <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
               <button
                 onClick={onRemove}
                 aria-label={`Diminuir ${nome}`}
-                className="flex h-6 w-6 items-center justify-center rounded-full border border-dourado/40 text-dourado transition-colors hover:bg-dourado hover:text-verde active:scale-95"
+                className="flex h-[18px] w-[18px] items-center justify-center rounded-full border border-dourado/40 text-dourado transition-colors hover:bg-dourado hover:text-verde active:scale-95 sm:h-6 sm:w-6"
               >
-                <Minus size={11} />
+                <Minus size={9} className="sm:hidden" />
+                <Minus size={11} className="hidden sm:block" />
               </button>
-              <span className="min-w-[1.1rem] text-center text-[0.72rem] text-creme">
+              <span className="min-w-[0.9rem] text-center text-[0.56rem] text-creme sm:min-w-[1.1rem] sm:text-[0.72rem]">
                 {qty}
                 {abrev ? ` ${abrev}` : ""}
               </span>
               <button
                 onClick={onAdd}
                 aria-label={`Aumentar ${nome}`}
-                className="flex h-6 w-6 items-center justify-center rounded-full border border-dourado/40 text-dourado transition-colors hover:bg-dourado hover:text-verde active:scale-95"
+                className="flex h-[18px] w-[18px] items-center justify-center rounded-full border border-dourado/40 text-dourado transition-colors hover:bg-dourado hover:text-verde active:scale-95 sm:h-6 sm:w-6"
               >
-                <Plus size={11} />
+                <Plus size={9} className="sm:hidden" />
+                <Plus size={11} className="hidden sm:block" />
               </button>
             </div>
           ) : (
             <button
               onClick={onAdd}
               aria-label={`Adicionar ${nome}`}
-              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-dourado text-verde transition-transform active:scale-90"
+              className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-dourado text-verde transition-transform active:scale-90 sm:h-6 sm:w-6"
             >
-              <Plus size={13} />
+              <Plus size={10} className="sm:hidden" />
+              <Plus size={13} className="hidden sm:block" />
             </button>
           )}
         </div>
@@ -191,7 +194,7 @@ export default function Cardapio() {
             Vendidos em caixa fechada de 10 unidades — preço por caixa.
           </p>
         </Reveal>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid grid-cols-4 gap-2 sm:gap-3 md:grid-cols-5 lg:grid-cols-6">
           {docesFinos.map(([nome, preco]) => (
             <DoceCard
               key={nome}
@@ -225,7 +228,7 @@ export default function Cardapio() {
             )}
           </div>
         </Reveal>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid grid-cols-4 gap-2 sm:gap-3 md:grid-cols-5 lg:grid-cols-6">
           {docesEspeciais.map(([nome, preco]) => (
             <DoceCard
               key={nome}
@@ -272,7 +275,7 @@ export default function Cardapio() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid grid-cols-4 gap-2 sm:gap-3 md:grid-cols-5 lg:grid-cols-6">
           {docesTradicionais.map(([nome, preco]) => (
             <DoceCard
               key={nome}
